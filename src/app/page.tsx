@@ -327,7 +327,6 @@ export default function Page() {
                 display: "block",
                 cursor: "pointer",
                 filter: "saturate(3.0) contrast(2.5) brightness(1.3)",
-
               }}
             />
           </Link>
@@ -526,7 +525,7 @@ export default function Page() {
             {loadingCat && <SkeletonGrid />}
 
             <div className="grid">
-              {byCat?.map((m, i) => (
+              {byCat?.map((m: Meal, i: number) => (
                 <div
                   key={m.idMeal}
                   className="glass card card-mount"
@@ -627,7 +626,7 @@ export default function Page() {
             {loadingArea && <SkeletonGrid />}
 
             <div className="grid">
-              {byArea?.map((m, i) => (
+              {byArea?.map((m: any, i: number) => (
                 <div
                   key={m.idMeal}
                   className="glass card card-mount"
@@ -668,7 +667,7 @@ export default function Page() {
             <div className="sectionTitle">Results for “{term}”</div>
             {loadingSearch && <SkeletonGrid />}
             <div className="grid">
-              {searchMeals?.map((m, i) => (
+              {searchMeals?.map((m: Meal, i: number) => (
                 <div
                   key={m.idMeal}
                   className="glass card card-mount"
