@@ -1,0 +1,21 @@
+{
+  "name": "Chefora",
+  "short_name": "Chefora",
+  "description": "Your Personal AI Culinary Assistant",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1220",
+  "theme_color": "#38bdf8",
+  "icons": [
+    {
+      "src": "/chefora-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/chefora-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
