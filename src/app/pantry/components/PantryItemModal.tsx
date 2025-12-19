@@ -3,7 +3,6 @@
 import { PantryItem, createPantryItem, updatePantryItem } from '../actions';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { createPortal } from 'react-dom';
 
 const CURRENCIES = ['USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 'INR', 'BRL', 'MXN', 'ZAR', 'KRW', 'SGD', 'HKD', 'NZD', 'SEK', 'NOK', 'DKK', 'PLN', 'RUB', 'TRY', 'THB', 'MYR', 'PHP', 'IDR', 'VND', 'Other'];
 
@@ -94,15 +93,6 @@ export default function PantryItemModal({ item, onClose }: PantryItemModalProps)
     return () => window.removeEventListener('keydown', handleEscape);
   }, [onClose]);
 
-  useEffect(() => {
-    // Add body class when modal opens
-    document.body.classList.add('pantry-modal-open');
-    return () => {
-      // Remove body class when modal closes
-      document.body.classList.remove('pantry-modal-open');
-    };
-  }, []);
-
   const handleFetchImage = async () => {
     if (!formData.name.trim()) {
       alert('Please enter a product name first');
@@ -181,25 +171,8 @@ export default function PantryItemModal({ item, onClose }: PantryItemModalProps)
     }
   };
 
-  if (typeof window === 'undefined') return null;
-
-  const modalContent = (
-    <>
-      {/* Backdrop */}
-      <div 
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: typeof window !== 'undefined' && window.innerWidth > 768 ? 280 : 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          zIndex: 9998,
-          cursor: 'pointer'
-        }}
-        onClick={onClose}
-      />
-      {/* Modal */}
+  return (
+    <div className="pantry-modal-overlay" onClick={onClose}>
       <div className="pantry-modal" onClick={(e) => e.stopPropagation()}>
         <div className="card-wrapper pantry-modal-card">
           <div className="card-background"></div>
@@ -446,9 +419,7 @@ export default function PantryItemModal({ item, onClose }: PantryItemModalProps)
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
-
-  return createPortal(modalContent, document.body);
 }
 

@@ -4,8 +4,6 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const productName = searchParams.get('name');
-    const skipParam = searchParams.get('skip');
-    const skip = skipParam ? parseInt(skipParam, 10) : 0;
 
     if (!productName) {
       return NextResponse.json({ error: 'Product name is required' }, { status: 400 });
@@ -92,13 +90,7 @@ export async function GET(request: Request) {
         const recipeKeywords = ['recipe', 'dish', 'pizza', 'pasta', 'salad', 'soup', 'cooked', 'prepared', 'meal', 'foodie'];
         
         // Score each image based on context
-        interface ScoredItem {
-          item: any;
-          score: number;
-          link: string;
-        }
-        
-        const scoredItems: ScoredItem[] = items.map((item: any) => {
+        const scoredItems = items.map((item: any) => {
           const link = item?.link || '';
           const title = (item?.title || '').toLowerCase();
           const snippet = (item?.snippet || '').toLowerCase();
@@ -122,30 +114,15 @@ export async function GET(request: Request) {
         // Sort by score (highest first)
         scoredItems.sort((a, b) => b.score - a.score);
         
-        // Filter valid items
-        const validItems = scoredItems.filter(item => item.link && item.link.startsWith('http'));
-        
-        if (validItems.length === 0) {
-          continue; // Try next search term
-        }
-        
-        // Select item based on skip parameter
-        const selectedIndex = Math.min(skip, validItems.length - 1);
-        const selectedItem = validItems[selectedIndex];
-        
-        if (selectedItem && selectedItem.link) {
-          return NextResponse.json({ image_url: selectedItem.link });
-        }
-        
-        // Fallback: try to find a high-scoring item (score > 0)
+        // First, try to find a high-scoring item (score > 0)
         const bestItem = scoredItems.find(item => item.score > 0 && item.link && item.link.startsWith('http'));
-        if (bestItem && bestItem.link) {
+        if (bestItem) {
           return NextResponse.json({ image_url: bestItem.link });
         }
         
         // If no high-scoring item, try any item with non-negative score
         const neutralItem = scoredItems.find(item => item.score >= 0 && item.link && item.link.startsWith('http'));
-        if (neutralItem && neutralItem.link) {
+        if (neutralItem) {
           return NextResponse.json({ image_url: neutralItem.link });
         }
         
@@ -155,7 +132,7 @@ export async function GET(request: Request) {
           if (link && typeof link === 'string' && link.startsWith('http')) {
             // Quick check: skip if URL clearly indicates a recipe
             const linkLower = link.toLowerCase();
-            if (!recipeKeywords.some((keyword: string) => linkLower.includes(keyword))) {
+            if (!recipeKeywords.some(keyword => linkLower.includes(keyword))) {
               return NextResponse.json({ image_url: link });
             }
           }
