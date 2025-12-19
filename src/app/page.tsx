@@ -1,10 +1,8 @@
-// src/app/page.tsx
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import CheforaParticleHero from "@/components/CheforaParticleHero";
 
 type Meal = { idMeal: string; strMeal: string; strMealThumb: string };
 
@@ -113,7 +111,7 @@ export default function Page() {
     queryFn: randomMeal,
   });
 
-  const [cat, setCat] = useState("vegetarian");
+  const [cat, setCat] = useState("Beef");
   const [area, setArea] = useState("Italian");
   const { data: cats } = useQuery({
     queryKey: ["cats"],
@@ -188,10 +186,6 @@ export default function Page() {
 
   return (
     <>
-    {/* Morphing particles overlay – does NOT push content down */}
-    <CheforaParticleHero />
-
-      {/* Original app UI below */}
       <div className="bg-base" aria-hidden />
       <div className="bg-anim" aria-hidden>
         <span
@@ -353,7 +347,6 @@ export default function Page() {
             >
               🍽️ <span style={{ marginLeft: 6 }}>Browse</span>
             </button>
-
             <button
               className={`tab tap-ripple ${tab === "search" ? "active" : ""}`}
               role="tab"
@@ -362,7 +355,6 @@ export default function Page() {
             >
               🔎 <span style={{ marginLeft: 6 }}>Search</span>
             </button>
-
             <button
               className={`tab tap-ripple ${tab === "special" ? "active" : ""}`}
               role="tab"
@@ -371,20 +363,6 @@ export default function Page() {
             >
               👨‍🍳 <span style={{ marginLeft: 6 }}>Chef’s Special</span>
             </button>
-
-            {/* ⭐ NEW: AI Recipes Link */}
-            <Link
-              href="/ai-recipes"
-              className="tab tap-ripple"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                fontWeight: 600,
-                padding: "10px 14px",
-              }}
-            >
-              🤖 <span style={{ marginLeft: 6 }}>AI Recipes</span>
-            </Link>
           </div>
         ) : (
           <>
@@ -428,14 +406,7 @@ export default function Page() {
               <select
                 id="navSelect"
                 value={tab}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  if (v === "ai") {
-                    window.location.href = "/ai-recipes";
-                  } else {
-                    setTab(v as any);
-                  }
-                }}
+                onChange={(e) => setTab(e.target.value as any)}
                 style={{
                   background: "rgba(0,0,0,.15)",
                   color: "var(--text)",
@@ -451,7 +422,6 @@ export default function Page() {
                 <option value="browse">Browse</option>
                 <option value="search">Search</option>
                 <option value="special">Chef’s Special</option>
-                <option value="ai">AI Recipes</option>
               </select>
             </div>
           </>
@@ -925,7 +895,9 @@ function DrawerWithContentAnimation({
               <div className="steps-stack">
                 {(meal?.strInstructions ?? "")
                   .split(/\r?\n|\.\s+(?=[A-Z])/g)
-                  .map((s: string) => s.replace(/^\s*\d+[\).\s-]*/g, ""))
+                  .map((s: string) =>
+                    s.replace(/^\s*\d+[\).\s-]*/g, "")
+                  )
                   .map((s: string) => s.trim())
                   .filter((s: string) => s.length > 0)
                   .map((s: string, i: number) => (
