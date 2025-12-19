@@ -43,7 +43,6 @@ export default function ShoppingListShell({
     search: searchParams.get('search') || '',
     category: searchParams.get('category') || '',
     store: searchParams.get('store') || '',
-    aisle: searchParams.get('aisle') || '',
     priority: searchParams.get('priority') || '',
     purchased: searchParams.get('purchased') === 'true' ? true : searchParams.get('purchased') === 'false' ? false : undefined,
     pantry_linked: searchParams.get('pantry_linked') === 'true',
@@ -110,11 +109,6 @@ export default function ShoppingListShell({
       return false;
     }
 
-    // Aisle filter
-    if (filters.aisle && item.aisle !== filters.aisle) {
-      return false;
-    }
-
     // Priority filter
     if (filters.priority && item.priority !== filters.priority) {
       return false;
@@ -137,7 +131,7 @@ export default function ShoppingListShell({
       case 'name':
         return (a.name || '').localeCompare(b.name || '');
       case 'price':
-        return (Number(a.price_est) || 0) - (Number(b.price_est) || 0);
+        return (a.price || 0) - (b.price || 0);
       case 'priority':
         const priorityOrder = { high: 3, medium: 2, low: 1 };
         return (priorityOrder[b.priority as keyof typeof priorityOrder] || 0) - 
@@ -198,21 +192,6 @@ export default function ShoppingListShell({
             listId={selectedList?.id}
             items={items}
             onRefresh={handleRefresh}
-            onAisleClick={(aisle) => {
-              const newAisle = filters.aisle === aisle ? '' : aisle;
-              setFilters(prev => ({ ...prev, aisle: newAisle }));
-              
-              // Scroll to items board when aisle is selected
-              if (newAisle) {
-                setTimeout(() => {
-                  const itemsBoard = document.querySelector('.shopping-items-board');
-                  if (itemsBoard) {
-                    itemsBoard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }, 100);
-              }
-            }}
-            selectedAisle={filters.aisle}
           />
         </aside>
       </div>

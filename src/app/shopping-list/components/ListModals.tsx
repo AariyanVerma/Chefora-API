@@ -106,17 +106,7 @@ export default function ListModals({ showCreate, editingListId, onClose, onSucce
       />
       {/* Modal */}
       <div className="shopping-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="shopping-modal-header">
-          <h2>{editingListId ? 'Edit List' : 'Create New List'}</h2>
-          <button
-            className="btn ghost tap-ripple pantry-modal-close"
-            onClick={onClose}
-            type="button"
-            aria-label="Close"
-          >
-            ✕
-          </button>
-        </div>
+        <h2>{editingListId ? 'Edit List' : 'Create New List'}</h2>
         <form onSubmit={handleSubmit}>
           <div className="shopping-form-group">
             <label className="shopping-form-label">List Name</label>
