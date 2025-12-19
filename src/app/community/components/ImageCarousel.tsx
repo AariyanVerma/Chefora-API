@@ -197,15 +197,14 @@ export default function ImageCarousel({
   // Single image - no carousel needed
   if (images.length === 1) {
     return (
-      <div className={`community-image-carousel ${className}`} style={{ width: '100%', height: '100%' }}>
-        <div className="community-image-carousel-container" style={{ width: '100%', height: '100%' }}>
+      <div className={`community-image-carousel ${className}`}>
+        <div className="community-image-carousel-container">
           <Image
             src={images[0]}
             alt={alt}
             width={600}
             height={400}
             className={`community-image-carousel-image ${imageClassName}`}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             unoptimized
           />
         </div>
@@ -216,13 +215,11 @@ export default function ImageCarousel({
   return (
     <div
       className={`community-image-carousel ${className}`}
-      style={className?.includes('compact') ? { width: '100%', height: '100%' } : {}}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       <div
         className="community-image-carousel-container"
-        style={className?.includes('compact') ? { width: '100%', height: '100%', aspectRatio: '1' } : {}}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
@@ -232,8 +229,7 @@ export default function ImageCarousel({
           ref={trackRef}
           className="community-image-carousel-track"
           style={{
-            width: `${infiniteImages.length * 100}%`,
-            transform: `translateX(-${currentIndex * (100 / infiniteImages.length)}%)`,
+            transform: `translateX(-${currentIndex * 100}%)`,
             transition: isTransitioning ? 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
           }}
         >
@@ -251,11 +247,6 @@ export default function ImageCarousel({
               <div
                 key={`${image}-${index}`}
                 className="community-image-carousel-slide"
-                style={{
-                  width: `${100 / infiniteImages.length}%`,
-                  flexShrink: 0,
-                  flexGrow: 0,
-                }}
               >
                 <Image
                   src={image}
@@ -263,7 +254,6 @@ export default function ImageCarousel({
                   width={600}
                   height={400}
                   className={`community-image-carousel-image ${imageClassName}`}
-                  style={imageClassName?.includes('compact') ? { width: '100%', height: '100%', objectFit: 'cover' } : {}}
                   unoptimized
                   priority={index === 1} // Priority on first real image
                 />

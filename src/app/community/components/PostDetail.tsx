@@ -262,7 +262,7 @@ export default function PostDetail({ post, initialComments, currentUserId }: Pos
   return (
     <div className="community-post-detail">
       <button
-        onClick={() => router.push('/community')}
+        onClick={() => router.back()}
         className="btn ghost tap-ripple"
         style={{ marginBottom: '16px' }}
       >
@@ -281,7 +281,7 @@ export default function PostDetail({ post, initialComments, currentUserId }: Pos
       }}>
             {/* Header */}
             <div className="community-post-header">
-              <Link href={`/community/u/${post.author_username}`} className="community-post-author">
+              <Link href={`/u/${post.author_username}`} className="community-post-author">
                 <div className="community-avatar">
                   {post.author_avatar_url ? (
                     <Image
@@ -487,7 +487,7 @@ export default function PostDetail({ post, initialComments, currentUserId }: Pos
                 onClick={handleLike}
                 className={`community-post-action ${isLiked ? 'active' : ''}`}
                 aria-label="Like"
-                style={{ color: '#ef4444' }}
+                style={{ color: isLiked ? '#ef4444' : 'inherit' }}
               >
                 <Heart size={20} fill={isLiked ? '#ef4444' : 'none'} />
                 <span>{likeCount}</span>
@@ -539,12 +539,7 @@ export default function PostDetail({ post, initialComments, currentUserId }: Pos
         backdropFilter: 'blur(20px) saturate(150%)',
         WebkitBackdropFilter: 'blur(20px) saturate(150%)'
       }}>
-        <h2 className="cardTitle" style={{ 
-          fontSize: 'var(--fs-lg)', 
-          marginBottom: '16px',
-          color: '#67e8f9',
-          textShadow: '0 0 10px rgba(103, 232, 249, 0.5), 0 0 20px rgba(103, 232, 249, 0.3)'
-        }}>
+        <h2 className="cardTitle" style={{ fontSize: 'var(--fs-lg)', marginBottom: '16px' }}>
           Comments ({comments.length})
         </h2>
 
@@ -556,7 +551,7 @@ export default function PostDetail({ post, initialComments, currentUserId }: Pos
             className="input"
             placeholder="Write a comment..."
             rows={3}
-            style={{ marginBottom: '12px', width: '90%' }}
+            style={{ marginBottom: '12px' }}
           />
           <button
             type="submit"

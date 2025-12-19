@@ -29,13 +29,7 @@ export default async function EditPostPage({
     <DashboardLayout>
       <div className="community-create-page">
         <div className="community-header">
-          <h1 className="cardTitle" style={{ 
-            fontSize: 'var(--fs-xl)', 
-            marginBottom: '24px',
-            color: '#67e8f9',
-            textShadow: '0 0 10px rgba(103, 232, 249, 0.5), 0 0 20px rgba(103, 232, 249, 0.3)',
-            textAlign: 'center'
-          }}>
+          <h1 className="cardTitle" style={{ fontSize: 'var(--fs-xl)', marginBottom: '24px' }}>
             Edit Post
           </h1>
         </div>
