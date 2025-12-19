@@ -88,7 +88,3 @@ export async function getUserTOTPSecret(userId: string): Promise<string | null> 
     return null;
   }
 }
-
-
-
-

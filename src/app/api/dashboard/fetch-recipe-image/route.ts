@@ -62,7 +62,3 @@ export async function GET(request: Request) {
     return NextResponse.json({ image_url: null });
   }
 }
-
-
-
-

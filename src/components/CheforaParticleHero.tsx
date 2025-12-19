@@ -37,10 +37,7 @@ async function createLogoTargets(
 
   await new Promise<void>((resolve, reject) => {
     img.onload = () => resolve();
-    img.onerror = (e) => {
-      console.error(`Failed to load logo image from ${url}:`, e);
-      reject(new Error(`Failed to load image: ${url}`));
-    };
+    img.onerror = (e) => reject(e);
   });
 
   const canvas = document.createElement("canvas");
@@ -967,14 +964,9 @@ export default function CheforaParticleHero() {
     }
 
     (async () => {
-      try {
-        await buildLogoAndTextTargets();
-        startMorphLoop();
-        animate();
-      } catch (error) {
-        console.error("Error initializing CheforaParticleHero:", error);
-        setVisible(false);
-      }
+      await buildLogoAndTextTargets();
+      startMorphLoop();
+      animate();
     })();
 
     return () => {
@@ -991,10 +983,7 @@ export default function CheforaParticleHero() {
       style={{
         width: "100%",
         height: "100vh",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        zIndex: 2500,
+        position: "relative",
         overflow: "hidden",
       }}
     >

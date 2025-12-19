@@ -180,7 +180,3 @@ If you didn't request this password reset, you can safely ignore this email.
 
   return await sendEmail({ to: email, subject, html, text });
 }
-
-
-
-

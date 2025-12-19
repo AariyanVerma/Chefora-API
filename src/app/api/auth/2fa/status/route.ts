@@ -27,7 +27,3 @@ export async function GET() {
     );
   }
 }
-
-
-
-

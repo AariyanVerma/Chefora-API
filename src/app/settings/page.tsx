@@ -1224,7 +1224,3 @@ export default function SettingsPage() {
     </>
   );
 }
-
-
-
-
